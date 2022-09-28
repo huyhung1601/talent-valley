@@ -3,13 +3,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
-import { Provider, useSelector } from "react-redux";
-import { store } from "./app/store";
+import { useSelector } from "react-redux";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Header } from "./components";
 import { AuthRoute } from "./components/routes/AuthRoute";
 import Profile from "./pages/Profile";
 import Company from "./pages/Company";
+import MyJobs from "./pages/MyJobs";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -65,6 +65,16 @@ const App = () => {
                   </AuthRoute>
                 }
               />
+
+              <Route
+                path="/myjobs/*"
+                element={
+                  <AuthRoute check={user}>
+                    <MyJobs />
+                  </AuthRoute>
+                }
+              />
+
               <Route path="/company/*" element={<Company />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

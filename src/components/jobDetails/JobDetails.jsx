@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { GET_JOB } from "../../graphql/queries/jobQueries";
 import { Spinner } from "../spinner/Spinner";
+import { AiOutlineHeart } from "react-icons/ai";
 
 export const JobDetails = () => {
   const { id } = useParams();
@@ -37,6 +38,12 @@ export const JobDetails = () => {
             </div>
           </div>
         </div>
+        <div className="d-flex align-items-center gap-2 mt-1">
+          <button className="btn btn-primary btn-sm fw-bold">Apply</button>
+          <button className="btn btn-secondary btn-light ">
+            <AiOutlineHeart />
+          </button>
+        </div>
       </div>
       <div className="border-bottom">
         <div className="card-body">
@@ -53,7 +60,10 @@ export const JobDetails = () => {
         <div className="card-body">
           <div>
             <h6 className="fw-bold">Full Job Description</h6>
-            <p className=" text-sm">{job.description}</p>
+            <p
+              className=" text-sm"
+              dangerouslySetInnerHTML={{ __html: job.description }}
+            ></p>
           </div>
 
           <p className="card-text"></p>

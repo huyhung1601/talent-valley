@@ -33,3 +33,8 @@ export const GET_JOB = gql`
     }
   }
 `;
+
+// export const MY_JOB = gql`
+//   query myjobs($userId: ID!){
+//   }
+// `;

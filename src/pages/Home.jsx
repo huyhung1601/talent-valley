@@ -9,6 +9,8 @@ const Home = () => {
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_JOBS);
 
+  console.log(error);
+
   const jobs = data?.jobs;
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { LOGIN } from "../graphql/mutations/userMutations";
 import { useForm } from "../hooks/useForm";
 import { loginSuccess } from "../features/auth/authSlice";
 import { Spinner } from "../components/spinner/Spinner";
-import { useStorage } from "../hooks/userStorage";
+import { useStorage } from "../hooks/useStorage";
 
 const initialValue = {
   email: "",
@@ -22,13 +22,13 @@ const Login = () => {
     update: (cache, { data: { login } }) => {
       setStorageData("user", login);
       dispatch(loginSuccess(login));
+      resetValues();
     },
   });
 
   const handleLogin = (e) => {
     e.preventDefault();
     login();
-    // resetValues();
   };
 
   return (
