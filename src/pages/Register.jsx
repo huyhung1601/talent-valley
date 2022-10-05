@@ -7,6 +7,7 @@ import { registerSuccess } from "../features/auth/authSlice";
 import { REGISTER } from "../graphql/mutations/userMutations";
 import { useForm } from "../hooks/useForm";
 import { useStorage } from "../hooks/useStorage";
+import { toast } from "react-toastify";
 
 const initialValue = {
   username: "",
@@ -24,12 +25,13 @@ const Register = () => {
   const [register, { loading }] = useMutation(REGISTER, {
     variables: values,
     update(proxy, { data: { register } }) {
-      setStorageData("user", register);
-      dispath(registerSuccess(register));
+      setStorageData("user", register.token);
+      dispath(registerSuccess({ token: register.token }));
+      toast("Register successfully!");
       resetValues();
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.errors);
+      setErrors(err?.graphQLErrors[0]?.extensions?.errors);
     },
   });
 
@@ -51,7 +53,10 @@ const Register = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center h-100 ">
-      <form className="card rounded p-4 w-50" onSubmit={handleRegister}>
+      <form
+        className="card rounded p-4 w-50 minW-50 w-md-100 "
+        onSubmit={handleRegister}
+      >
         <div className="h4 text-center mb-3">Register</div>
         <div className="mb-3">
           <label for="username" className="form-label">
@@ -64,7 +69,7 @@ const Register = () => {
             onChange={handleChange}
             className="form-control"
             id="username"
-            required
+            require="true"
           />
         </div>
         <div className="mb-3">
@@ -78,7 +83,7 @@ const Register = () => {
             onChange={handleChange}
             className="form-control"
             id="email"
-            required
+            require="true"
           />
           {errors?.email && (
             <small className="text-danger">{errors?.email}</small>

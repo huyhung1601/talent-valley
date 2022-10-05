@@ -24,7 +24,6 @@ export const JobSearch = () => {
 
   const handleSearch = useCallback(() => {
     if (values.search !== "" || values.location !== "") {
-      console.log("first");
       searchJobs();
     }
   }, [values, searchJobs]);

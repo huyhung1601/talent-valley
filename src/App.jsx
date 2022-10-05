@@ -4,7 +4,13 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Register from "./pages/Register";
 import { useSelector } from "react-redux";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { Header } from "./components";
 import { AuthRoute } from "./components/routes/AuthRoute";
 import Profile from "./pages/Profile";
@@ -25,9 +31,25 @@ const cache = new InMemoryCache({
   },
 });
 
+const httpLink = createHttpLink({
+  uri: "http://localhost:4000/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = JSON.parse(window.localStorage.getItem("user"))?.token;
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 const App = () => {
   const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    link: authLink.concat(httpLink),
     cache,
   });
 

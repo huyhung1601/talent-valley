@@ -24,3 +24,17 @@ p {
 .test-md {
   font-size: 14px;
 }
+
+.minW-50 {
+  min-width: 50%;
+}
+
+.minW-75 {
+  min-width: 75%;
+}
+
+@media (max-width: 600px) {
+  .w-md-100 {
+    width: 100%;
+  }
+}

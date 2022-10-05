@@ -3,10 +3,14 @@ import { gql } from "@apollo/client";
 export const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      id
-      username
-      email
       token
+      myJobs {
+        job {
+          id
+        }
+        status
+        updatedAt
+      }
     }
   }
 `;
@@ -26,18 +30,51 @@ export const REGISTER = gql`
         confirmPassword: $confirmPassword
       }
     ) {
-      id
-      username
-      email
       token
     }
   }
 `;
 
-// export const UPDATESAVEDJOBS = gql`
-//   mutation updateSavedJobs($userId: String!, $jobId: String!): {
-//     updateSavedJobs(userId: $userId, jobId: $jobId){
-//       message
-//     }
-//   }
-// `;
+export const UPDATE_CONTACT = gql`
+  mutation updateContact(
+    $username: String!
+    $number: String
+    $address: String
+  ) {
+    updateContact(username: $username, number: $number, address: $address) {
+      message
+    }
+  }
+`;
+
+export const SAVE_JOB = gql`
+  mutation saveJob($jobId: String!) {
+    saveJob(jobId: $jobId) {
+      message
+    }
+  }
+`;
+
+export const APPLY_JOB = gql`
+  mutation applyJob($jobId: String!) {
+    applyJob(jobId: $jobId) {
+      message
+    }
+  }
+`;
+
+export const REMOVE_FROM_MY_JOBS = gql`
+  mutation removeFromMyJobs($jobId: String!) {
+    removeFromMyJobs(jobId: $jobId) {
+      message
+    }
+  }
+`;
+
+export const UPDATE_SAVED_JOBS = gql`
+  mutation updateSavedJobs($jobId: String!) {
+    updateSavedJobs(jobId: $jobId) {
+      message
+    }
+  }
+`;

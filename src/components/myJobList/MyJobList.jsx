@@ -1,7 +1,23 @@
 import React from "react";
-import { AppliedJobs } from "./appliedJobs/AppliedJobs";
-import { SavedJobs } from "./savedJobs/SavedJobs";
+import { EmptyJobList } from "./emptyJobList/EmptyJobList";
+import { MyJobItem } from "./myJobItem/MyJobItem";
 
-export const MyJobList = ({ activeItem }) => {
-  return <>{activeItem === "saved" ? <SavedJobs /> : <AppliedJobs />}</>;
+export const MyJobList = ({ activeItem, myJobs }) => {
+  const filteredJobs = myJobs?.filter((myJob) => myJob.status === activeItem);
+
+  return (
+    <>
+      {filteredJobs?.length === 0 ? (
+        <EmptyJobList activeItem={activeItem} />
+      ) : (
+        filteredJobs?.map((myJob) => (
+          <MyJobItem
+            key={myJob.job.id}
+            myJob={myJob}
+            appliedBtn={activeItem === "saved"}
+          />
+        ))
+      )}
+    </>
+  );
 };

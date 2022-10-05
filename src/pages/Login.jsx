@@ -6,6 +6,7 @@ import { useForm } from "../hooks/useForm";
 import { loginSuccess } from "../features/auth/authSlice";
 import { Spinner } from "../components/spinner/Spinner";
 import { useStorage } from "../hooks/useStorage";
+import { useState } from "react";
 
 const initialValue = {
   email: "",
@@ -16,6 +17,7 @@ const Login = () => {
   const { values, handleChange, resetValues } = useForm(initialValue);
   const dispatch = useDispatch();
   const { setStorageData } = useStorage();
+  const [errors, setErrors] = useState({});
 
   const [login, { loading }] = useMutation(LOGIN, {
     variables: values,
@@ -23,6 +25,10 @@ const Login = () => {
       setStorageData("user", login);
       dispatch(loginSuccess(login));
       resetValues();
+      setErrors({});
+    },
+    onError(err) {
+      setErrors(err?.graphQLErrors[0]?.extensions?.errors);
     },
   });
 
@@ -33,10 +39,13 @@ const Login = () => {
 
   return (
     <div className="container h-100 d-flex justify-content-center align-items-center">
-      <form className="card rounded p-4" onSubmit={handleLogin}>
+      <form
+        className="card rounded p-4 minW-50 w-md-100 "
+        onSubmit={handleLogin}
+      >
         <div className="h4 text-center mb-3">Login</div>
         <div className="mb-3">
-          <label for="email" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email address
           </label>
           <input
@@ -46,11 +55,14 @@ const Login = () => {
             onChange={handleChange}
             className="form-control"
             id="email"
-            required
+            require="true"
           />
+          {errors?.email && (
+            <small className="text-danger">{errors?.email}</small>
+          )}
         </div>
         <div className="mb-3">
-          <label for="password" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input
@@ -58,10 +70,13 @@ const Login = () => {
             value={values.password}
             onChange={handleChange}
             name="password"
-            require
             className="form-control"
             id="password"
+            require="true"
           />
+          {errors?.password && (
+            <small className="text-danger">{errors?.password}</small>
+          )}
         </div>
 
         <button type="submit" className="btn btn-primary">

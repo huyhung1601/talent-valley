@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: window.localStorage.getItem("user") || null,
+  user: JSON.parse(window.localStorage.getItem("user")) || null,
 };
 
 const authSlice = createSlice({
@@ -9,18 +9,68 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.user = action.payload;
+      state.user = { ...action.payload };
     },
     logoutSuccess: (state) => {
       state.user = null;
     },
     registerSuccess: (state, action) => {
-      state.user = action.payload;
+      state.user = { ...action.payload };
+    },
+    getProfileSuccess: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+    },
+    getMyJobsSuccess: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+    },
+    saveJobSuccess: (state, action) => {
+      const savedJob = {
+        job: { id: action.payload },
+        status: "saved",
+        updatedAt: new Date().toDateString(),
+      };
+      state.user.myJobs = [...state.user.myJobs, savedJob];
+      window.localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    applyJobSuccess: (state, action) => {
+      const appliedJob = {
+        job: { id: action.payload },
+        status: "applied",
+        updatedAt: new Date().toDateString(),
+      };
+
+      const jobIndex = state.user.myJobs.findIndex(
+        (x) => x.job.id === action.payload
+      );
+
+      console.log(jobIndex);
+
+      if (jobIndex < 0) {
+        state.user.myJobs.push(appliedJob);
+      } else {
+        state.user.myJobs.splice(jobIndex, 1, appliedJob);
+      }
+
+      window.localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    removeFromMyJobsSuccess: (state, action) => {
+      state.user.myJobs = state.user.myJobs.filter(
+        (x) => x.job.id !== action.payload
+      );
+      window.localStorage.setItem("user", JSON.stringify(state.user));
     },
   },
 });
 
-export const { loginSuccess, logoutSuccess, registerSuccess } =
-  authSlice.actions;
+export const {
+  loginSuccess,
+  logoutSuccess,
+  registerSuccess,
+  getMyJobsSuccess,
+  getProfileSuccess,
+  saveJobSuccess,
+  applyJobSuccess,
+  removeFromMyJobsSuccess,
+} = authSlice.actions;
 
 export default authSlice.reducer;

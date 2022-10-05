@@ -1,8 +1,13 @@
 import React from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const SlideBar = ({ items, activeItem, handleActiveSlide }) => {
+export const SlideBar = ({
+  items,
+  activeItem,
+  handleActiveSlide,
+  totalSavedJobs,
+  totalAppliedJobs,
+}) => {
   const navigate = useNavigate();
 
   const handleSlideTo = (item) => {
@@ -17,7 +22,7 @@ export const SlideBar = ({ items, activeItem, handleActiveSlide }) => {
       {items.length > 0 &&
         items.map((item, index) => (
           <li
-            className={`text-capitalize border-primary border-2 m-0 bottom-100 fw-bold h-100 ${
+            className={`d-flex gap-1 text-capitalize border-primary border-2 m-0 bottom-100 fw-bold h-100 ${
               item === activeItem
                 ? "border-bottom text-primary"
                 : "text-secondary"
@@ -26,6 +31,11 @@ export const SlideBar = ({ items, activeItem, handleActiveSlide }) => {
             onClick={() => handleSlideTo(item)}
           >
             <h5>{item}</h5>
+            <div>
+              <p className="bg-light px-1 text-black">
+                {index === 0 ? totalSavedJobs : totalAppliedJobs}
+              </p>
+            </div>
           </li>
         ))}
     </ul>
