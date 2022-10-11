@@ -25,7 +25,6 @@ const Register = () => {
   const [register, { loading }] = useMutation(REGISTER, {
     variables: values,
     update(proxy, { data: { register } }) {
-      setStorageData("user", register.token);
       dispath(registerSuccess({ token: register.token }));
       toast("Register successfully!");
       resetValues();

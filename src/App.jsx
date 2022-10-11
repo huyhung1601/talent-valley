@@ -16,6 +16,7 @@ import { AuthRoute } from "./components/routes/AuthRoute";
 import Profile from "./pages/Profile";
 import Company from "./pages/Company";
 import MyJobs from "./pages/MyJobs";
+import Apply from "./pages/Apply";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -87,7 +88,6 @@ const App = () => {
                   </AuthRoute>
                 }
               />
-
               <Route
                 path="/myjobs/*"
                 element={
@@ -96,7 +96,14 @@ const App = () => {
                   </AuthRoute>
                 }
               />
-
+              <Route
+                path="/apply/:id/form/*"
+                element={
+                  <AuthRoute check={user}>
+                    <Apply />
+                  </AuthRoute>
+                }
+              />
               <Route path="/company/*" element={<Company />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

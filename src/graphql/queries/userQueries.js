@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const MY_PROFILE = gql`
   query myProfile {
     myProfile {
+      id
       username
       email
       address
@@ -20,13 +21,11 @@ export const MY_JOBS = gql`
       job {
         title
         id
-        location
-        company {
-          id
-        }
+        description
         company {
           id
           name
+          location
         }
       }
     }

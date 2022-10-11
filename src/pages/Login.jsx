@@ -16,13 +16,11 @@ const initialValue = {
 const Login = () => {
   const { values, handleChange, resetValues } = useForm(initialValue);
   const dispatch = useDispatch();
-  const { setStorageData } = useStorage();
   const [errors, setErrors] = useState({});
 
   const [login, { loading }] = useMutation(LOGIN, {
     variables: values,
     update: (cache, { data: { login } }) => {
-      setStorageData("user", login);
       dispatch(loginSuccess(login));
       resetValues();
       setErrors({});

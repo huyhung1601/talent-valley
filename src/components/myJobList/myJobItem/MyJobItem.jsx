@@ -1,20 +1,18 @@
 import { useMutation } from "@apollo/client";
 import React from "react";
 import companyLogo from "../../../assets/company-logo.png";
-import {
-  APPLY_JOB,
-  REMOVE_FROM_MY_JOBS,
-} from "../../../graphql/mutations/userMutations";
+import { REMOVE_FROM_MY_JOBS } from "../../../graphql/mutations/userMutations";
 import { MY_JOBS } from "../../../graphql/queries/userQueries";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import {
-  applyJobSuccess,
-  removeFromMyJobsSuccess,
-} from "../../../features/auth/authSlice";
+import { removeFromMyJobsSuccess } from "../../../features/auth/authSlice";
+import { selectJob } from "../../../features/job/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 export const MyJobItem = ({ myJob, appliedBtn }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [removeFromMyJobs] = useMutation(REMOVE_FROM_MY_JOBS, {
     variables: { jobId: myJob.job.id },
     update: (cache, { data: { removeFromMyJobs } }) => {
@@ -28,29 +26,13 @@ export const MyJobItem = ({ myJob, appliedBtn }) => {
     },
   });
 
-  const [applyJob] = useMutation(APPLY_JOB, {
-    variables: { jobId: myJob.job.id },
-    update: (cache, { data: { applyJob } }) => {
-      const { myJobs } = cache.readQuery({ query: MY_JOBS });
-      cache.writeQuery({
-        query: MY_JOBS,
-        data: {
-          myJobs: myJobs.map((x) =>
-            x.job.id !== myJob.job.id ? x : { ...x, status: "applied" }
-          ),
-        },
-      });
-      dispatch(applyJobSuccess(myJob.job.id));
-      toast(applyJob.message);
-    },
-  });
-
   const handleRemoveFromMyJobs = () => {
     removeFromMyJobs();
   };
 
   const handleApplyJob = () => {
-    applyJob();
+    dispatch(selectJob(myJob.job));
+    navigate(`/apply/${myJob.job.id}/form/resume`);
   };
 
   return (

@@ -78,3 +78,11 @@ export const UPDATE_SAVED_JOBS = gql`
     }
   }
 `;
+
+export const UPDATE_RESUME = gql`
+  mutation updateResume($fileName: String!) {
+    updateResume(fileName: $fileName) {
+      url
+    }
+  }
+`;

@@ -5,23 +5,26 @@ const initialState = {
 };
 
 const authSlice = createSlice({
-  name: "authSlice",
+  name: "auth",
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
       state.user = { ...action.payload };
+      window.localStorage.setItem("user", JSON.stringify(action.payload));
     },
     logoutSuccess: (state) => {
       state.user = null;
+      window.localStorage.clear();
     },
     registerSuccess: (state, action) => {
       state.user = { ...action.payload };
+      window.localStorage.setItem("user", JSON.stringify(action.payload));
     },
     getProfileSuccess: (state, action) => {
       state.user = { ...state.user, ...action.payload };
     },
     getMyJobsSuccess: (state, action) => {
-      state.user = { ...state.user, ...action.payload };
+      state.user = { ...state.user, myJobs: action.payload };
     },
     saveJobSuccess: (state, action) => {
       const savedJob = {
@@ -42,8 +45,6 @@ const authSlice = createSlice({
       const jobIndex = state.user.myJobs.findIndex(
         (x) => x.job.id === action.payload
       );
-
-      console.log(jobIndex);
 
       if (jobIndex < 0) {
         state.user.myJobs.push(appliedJob);

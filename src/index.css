@@ -13,7 +13,8 @@ ul {
   list-style: none;
 }
 
-p {
+p,
+h3 {
   margin: 0;
 }
 
@@ -37,4 +38,13 @@ p {
   .w-md-100 {
     width: 100%;
   }
+}
+
+/* Drop down */
+.dropdown-toggle::after {
+  display: none !important;
+}
+.dropdown-menu {
+  min-width: 0 !important;
+  min-height: 0 !important;
 }

@@ -1,56 +1,33 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { GET_JOB } from "../../graphql/queries/jobQueries";
 import { Spinner } from "../spinner/Spinner";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  APPLY_JOB,
   REMOVE_FROM_MY_JOBS,
   SAVE_JOB,
 } from "../../graphql/mutations/userMutations";
 import { toast } from "react-toastify";
 import {
-  applyJobSuccess,
   removeFromMyJobsSuccess,
   saveJobSuccess,
 } from "../../features/auth/authSlice";
+import { JobDescription } from "./JobDescription";
+import { selectJob } from "../../features/job/jobSlice";
+import { MY_JOBS } from "../../graphql/queries/userQueries";
 
 export const JobDetails = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { loading, error, data } = useQuery(GET_JOB, {
     variables: { jobId: id },
   });
 
-  const [saveJob] = useMutation(SAVE_JOB, {
-    variables: { jobId: id },
-    update: (_, { data: { saveJob } }) => {
-      dispatch(saveJobSuccess(id));
-      toast(saveJob.message);
-    },
-  });
-
-  const [removeFromMyJobs] = useMutation(REMOVE_FROM_MY_JOBS, {
-    variables: { jobId: id },
-    update: () => {
-      dispatch(removeFromMyJobsSuccess(id));
-    },
-  });
-
-  const [applyJob] = useMutation(APPLY_JOB, {
-    variables: { jobId: id },
-    update: (_, { data: { applyJob } }) => {
-      dispatch(applyJobSuccess(id));
-      toast(applyJob.message);
-    },
-  });
-
   const job = data?.job;
-
   const isLiked = user?.myJobs
     ?.filter((x) => x.status === "saved")
     .find((x) => x.job.id === id);
@@ -59,8 +36,43 @@ export const JobDetails = () => {
     ?.filter((x) => x.status === "applied")
     .find((x) => x.job.id === id);
 
+  const [saveJob] = useMutation(SAVE_JOB, {
+    variables: { jobId: id },
+    update: (cache, { data: { saveJob } }) => {
+      const { myJobs } = cache.readQuery({ query: MY_JOBS });
+      cache.writeQuery({
+        query: MY_JOBS,
+        data: {
+          myJobs: [
+            ...myJobs,
+            { status: "saved", updatedAt: new Date().toDateString(), job },
+          ],
+        },
+      });
+      dispatch(saveJobSuccess(id));
+      toast(saveJob.message);
+    },
+  });
+
+  const [removeFromMyJobs] = useMutation(REMOVE_FROM_MY_JOBS, {
+    variables: { jobId: id },
+    update: (cache) => {
+      const { myJobs } = cache.readQuery({ query: MY_JOBS });
+      cache({
+        query: MY_JOBS,
+        data: { myJobs: myJobs.filter((x) => x.id !== id) },
+      });
+      dispatch(removeFromMyJobsSuccess(id));
+    },
+  });
+
   const handleSaveJob = () => {
-    saveJob();
+    if (!user) {
+      navigate("/login");
+      toast("Please login first!");
+    } else {
+      saveJob();
+    }
   };
 
   const handleUnsaveJob = () => {
@@ -68,7 +80,13 @@ export const JobDetails = () => {
   };
 
   const handleApplyJob = () => {
-    applyJob();
+    if (!user) {
+      navigate("/login");
+      toast("Please login first!");
+    } else {
+      dispatch(selectJob(job));
+      navigate(`/apply/${id}/form/resume`);
+    }
   };
 
   if (loading) return <Spinner />;
@@ -78,10 +96,7 @@ export const JobDetails = () => {
     <div className="card">
       <div className="card-hearder border-bottom shadow-sm p-3  ">
         <h5>{job.title}</h5>
-        <Link
-          className="text-decoration-none"
-          to={`/company/${job.company.id}`}
-        >
+        <Link className="text-primary" to={`/company/${job.company.id}`}>
           <h6>{job.company.name}</h6>
         </Link>
         <div className=" text-sm">
@@ -138,23 +153,9 @@ export const JobDetails = () => {
             <p className="fw-bold text-sm">Salary</p>
             <p className="card-text text-sm">{job.salary}</p>
           </div>
-
-          <p className="card-text"></p>
         </div>
       </div>
-      <div>
-        <div className="card-body">
-          <div>
-            <h6 className="fw-bold">Full Job Description</h6>
-            <p
-              className=" text-sm"
-              dangerouslySetInnerHTML={{ __html: job.description }}
-            ></p>
-          </div>
-
-          <p className="card-text"></p>
-        </div>
-      </div>
+      <JobDescription job={job} />
     </div>
   );
 };

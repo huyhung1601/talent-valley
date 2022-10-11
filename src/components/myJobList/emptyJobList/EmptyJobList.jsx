@@ -9,7 +9,7 @@ export const EmptyJobList = ({ activeItem }) => {
       <div className="w-25">
         <img src={emptyFolder} className="img-fluid " alt="emptyFolder" />
       </div>
-      <p className="fw-bold">{`No jobs ${activeItem} yet`}</p>
+      <p className="fw-bold">{`No job ${activeItem} yet`}</p>
       <Link to="/" className="btn btn-primary">
         Find jobs <AiOutlineArrowRight />
       </Link>

@@ -6,4 +6,6 @@ export { JobDetails } from "./jobDetails/JobDetails";
 export { AuthRoute } from "./routes/AuthRoute";
 export { SlideBar } from "./slideBar/SlideBar";
 export { MyJobList } from "./myJobList/MyJobList";
-export { ContactCard } from "./contactCard/ContactCard";
+export { JobModal } from "./jobModal/JobModal";
+export { ApplyProcess } from "./applyProcess/ApplyProcess";
+export { ProfileContainer } from "./profileContainer/ProfileContainer";

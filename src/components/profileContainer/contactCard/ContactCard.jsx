@@ -1,14 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useForm } from "../../hooks/useForm";
+import { useForm } from "../../../hooks/useForm";
 import { ContactForm } from "./ContactForm";
 import { ImLocation } from "react-icons/im";
 import { FaUser, FaPhone } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { useMutation } from "@apollo/client";
-import { UPDATE_CONTACT } from "../../graphql/mutations/userMutations";
-import { MY_PROFILE } from "../../graphql/queries/userQueries";
+import { UPDATE_CONTACT } from "../../../graphql/mutations/userMutations";
+import { MY_PROFILE } from "../../../graphql/queries/userQueries";
 
 export const ContactCard = ({ myProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
