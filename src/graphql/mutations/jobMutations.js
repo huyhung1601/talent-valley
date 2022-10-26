@@ -16,3 +16,59 @@ export const SEARCH_JOBS = gql`
     }
   }
 `;
+
+export const UPDATE_JOB = gql`
+  mutation updateJob(
+    $id: ID
+    $title: String!
+    $jobType: String!
+    $salary: String!
+    $location: String!
+    $description: String!
+    $companyId: ID!
+  ) {
+    updateJob(
+      jobInput: {
+        id: $id
+        title: $title
+        jobType: $jobType
+        salary: $salary
+        location: $location
+        description: $description
+        companyId: $companyId
+      }
+    ) {
+      message
+    }
+  }
+`;
+
+export const CREATE_JOB = gql`
+  mutation createJob(
+    $title: String!
+    $jobType: String!
+    $salary: String!
+    $location: String!
+    $description: String!
+    $companyId: ID!
+  ) {
+    createJob(
+      jobInput: {
+        title: $title
+        jobType: $jobType
+        salary: $salary
+        location: $location
+        description: $description
+        companyId: $companyId
+      }
+    ) {
+      id
+      title
+      location
+      description
+      salary
+      applications
+      createdAt
+    }
+  }
+`;

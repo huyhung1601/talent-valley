@@ -14,16 +14,28 @@ export const useApplyProcess = ({ job }) => {
   const steps = ["resume", "contact", "review"];
   const dispatch = useDispatch();
 
+  const { loading, data } = useQuery(MY_PROFILE);
+  const myProfile = data?.myProfile;
+
   const [applyJob] = useMutation(APPLY_JOB, {
     variables: { jobId: job.id },
     update: (cache, { data: { applyJob } }) => {
       const { myJobs } = cache.readQuery({ query: MY_JOBS });
+      const myJob = {
+        job,
+        status: "applied",
+        updatedAt: new Date().toDateString(),
+      };
+      const jobIndex = myJobs.findIndex((job) => job.jobId === job.id);
       cache.writeQuery({
         query: MY_JOBS,
         data: {
-          myJobs: myJobs.map((x) =>
-            x.job.id !== job.id ? x : { ...x, status: "applied" }
-          ),
+          myJobs:
+            jobIndex < 0
+              ? [myJob, ...myJobs]
+              : myJobs.map((x) =>
+                  x.job.id !== job.id ? x : { ...x, status: "applied" }
+                ),
         },
       });
       dispatch(applyJobSuccess(job.id));
@@ -31,9 +43,6 @@ export const useApplyProcess = ({ job }) => {
       navigate("/");
     },
   });
-
-  const { loading, data } = useQuery(MY_PROFILE);
-  const myProfile = data?.myProfile;
 
   const handleNextStep = () => {
     setStep(step + 1);

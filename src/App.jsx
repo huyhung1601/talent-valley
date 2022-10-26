@@ -1,8 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import Register from "./pages/Register";
+
 import { useSelector } from "react-redux";
 import {
   ApolloClient,
@@ -13,10 +10,20 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Header } from "./components";
 import { AuthRoute } from "./components/routes/AuthRoute";
-import Profile from "./pages/Profile";
-import Company from "./pages/Company";
-import MyJobs from "./pages/MyJobs";
-import Apply from "./pages/Apply";
+
+import {
+  Apply,
+  Company,
+  Home,
+  Interview,
+  Job,
+  Login,
+  MyJobs,
+  NotFound,
+  Profile,
+  Recruiter,
+  Register,
+} from "./pages";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -61,7 +68,7 @@ const App = () => {
       <ApolloProvider client={client}>
         <Router>
           <Header />
-          <div className="container" style={{ height: "calc(100vh - 75px)" }}>
+          <div style={{ height: "calc(100vh - 60px)" }}>
             <Routes>
               <Route path="/*" element={<Home />} />
               <Route
@@ -104,7 +111,24 @@ const App = () => {
                   </AuthRoute>
                 }
               />
-              <Route path="/company/*" element={<Company />} />
+              <Route path="/company/:id/*" element={<Company />} />
+              <Route path="/jobs/:jobId" element={<Job />} />
+              <Route
+                path="/recruiter/*"
+                element={
+                  <AuthRoute check={user}>
+                    <Recruiter />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="/interview/:interviewId/*"
+                element={
+                  <AuthRoute check={user}>
+                    <Interview />
+                  </AuthRoute>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

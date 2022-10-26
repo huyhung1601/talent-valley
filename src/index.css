@@ -14,7 +14,9 @@ ul {
 }
 
 p,
+span,
 h3 {
+  padding: 0;
   margin: 0;
 }
 
@@ -34,9 +36,13 @@ h3 {
   min-width: 75%;
 }
 
-@media (max-width: 600px) {
+.minH-75 {
+  min-height: 75%;
+}
+
+@media (max-width: 768px) {
   .w-md-100 {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
@@ -48,3 +54,5 @@ h3 {
   min-width: 0 !important;
   min-height: 0 !important;
 }
+
+/*Video */

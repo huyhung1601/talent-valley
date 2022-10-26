@@ -1,5 +1,5 @@
 export { Header } from "./header/Header";
-export { Spinner } from "./spinner/Spinner";
+export { Spinner } from "./UIs/spinner/Spinner";
 export { JobList } from "./jobList/JobList";
 export { JobSearch } from "./jobSearch/JobSearch";
 export { JobDetails } from "./jobDetails/JobDetails";
@@ -9,3 +9,6 @@ export { MyJobList } from "./myJobList/MyJobList";
 export { JobModal } from "./jobModal/JobModal";
 export { ApplyProcess } from "./applyProcess/ApplyProcess";
 export { ProfileContainer } from "./profileContainer/ProfileContainer";
+export { CompanyContainer } from "./companyContainer/CompanyContainer";
+export { RecruiterDashboard } from "./recruiterDashboard/RecruiterDashboard";
+export { InterviewContainer } from "./interviewContainer/InterviewContainer";

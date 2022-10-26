@@ -4,33 +4,28 @@ export const LOGIN = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      myJobs {
+      id
+      username
+      email
+      role
+      companyId
+      savedJobs {
+        id
+      }
+      applications {
         job {
           id
         }
-        status
-        updatedAt
       }
     }
   }
 `;
 
 export const REGISTER = gql`
-  mutation register(
-    $email: String!
-    $username: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-      }
-    ) {
+  mutation register($registerInput: RegisterInput!) {
+    register(registerInput: $registerInput) {
       token
+      role
     }
   }
 `;

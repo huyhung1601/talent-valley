@@ -1,5 +1,5 @@
 import React from "react";
-import { JobDescription } from "../jobDetails/JobDescription";
+import { JobDescription } from "../jobDetails/jobDescription/JobDescription";
 
 export const JobModal = ({ job }) => {
   return (

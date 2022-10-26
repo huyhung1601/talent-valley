@@ -15,6 +15,7 @@ const authSlice = createSlice({
     logoutSuccess: (state) => {
       state.user = null;
       window.localStorage.clear();
+      window.location.reload();
     },
     registerSuccess: (state, action) => {
       state.user = { ...action.payload };
@@ -27,32 +28,23 @@ const authSlice = createSlice({
       state.user = { ...state.user, myJobs: action.payload };
     },
     saveJobSuccess: (state, action) => {
-      const savedJob = {
-        job: { id: action.payload },
-        status: "saved",
-        updatedAt: new Date().toDateString(),
-      };
-      state.user.myJobs = [...state.user.myJobs, savedJob];
       window.localStorage.setItem("user", JSON.stringify(state.user));
     },
     applyJobSuccess: (state, action) => {
-      const appliedJob = {
-        job: { id: action.payload },
-        status: "applied",
-        updatedAt: new Date().toDateString(),
-      };
-
-      const jobIndex = state.user.myJobs.findIndex(
-        (x) => x.job.id === action.payload
-      );
-
-      if (jobIndex < 0) {
-        state.user.myJobs.push(appliedJob);
-      } else {
-        state.user.myJobs.splice(jobIndex, 1, appliedJob);
-      }
-
-      window.localStorage.setItem("user", JSON.stringify(state.user));
+      // const appliedJob = {
+      //   job: { id: action.payload },
+      //   status: "applied",
+      //   updatedAt: new Date().toDateString(),
+      // };
+      // const jobIndex = state.user.myJobs.findIndex(
+      //   (x) => x.job.id === action.payload
+      // );
+      // if (jobIndex < 0) {
+      //   state.user.myJobs.push(appliedJob);
+      // } else {
+      //   state.user.myJobs.splice(jobIndex, 1, appliedJob);
+      // }
+      // window.localStorage.setItem("user", JSON.stringify(state.user));
     },
     removeFromMyJobsSuccess: (state, action) => {
       state.user.myJobs = state.user.myJobs.filter(

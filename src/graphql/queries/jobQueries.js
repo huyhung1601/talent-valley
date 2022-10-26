@@ -25,10 +25,14 @@ export const GET_JOB = gql`
       jobType
       salary
       description
+      location
+      applications
       company {
         id
         name
         location
+        image
+        logo
       }
     }
   }

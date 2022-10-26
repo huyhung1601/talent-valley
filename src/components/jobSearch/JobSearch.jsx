@@ -4,7 +4,7 @@ import { useForm } from "../../hooks/useForm";
 import { useMutation } from "@apollo/client";
 import { SEARCH_JOBS } from "../../graphql/mutations/jobMutations";
 import { GET_JOBS } from "../../graphql/queries/jobQueries";
-import { Spinner } from "../spinner/Spinner";
+import { Spinner } from "../UIs/spinner/Spinner";
 
 const initialValue = {
   search: "",
@@ -66,7 +66,7 @@ export const JobSearch = () => {
         </button>
       </div>
       {loading && <Spinner />}
-      {error && <p>Something went wrong!</p>}
+      {error && <h6>Something went wrong!</h6>}
     </>
   );
 };

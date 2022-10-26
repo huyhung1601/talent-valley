@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-import { Spinner } from "../spinner/Spinner";
+import { Spinner } from "../UIs/spinner/Spinner";
 import { ProgressBar } from "./progressBar/ProgressBar";
 import { StepOne } from "./stepOne/StepOne";
 import { StepThree } from "./stepThree/StepThree";

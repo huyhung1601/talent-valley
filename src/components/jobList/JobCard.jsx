@@ -21,8 +21,8 @@ export const JobCard = ({ job }) => {
           <div className="bg-success bg-opacity-25  px-1 rounded text-success">
             <MdWork className="me-1" />
             <span className="text-sm text-capitalize">
-              {job.jobType[0]}
-              <sup>{` +${job.jobType.length - 1}`}</sup>
+              {job.jobType.split(",")[0]}
+              <sup>{` +${job.jobType.split(",").length - 1}`}</sup>
             </span>
           </div>
         </div>

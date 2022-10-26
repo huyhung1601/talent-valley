@@ -44,7 +44,7 @@ export const useUpdateResume = () => {
     },
   });
 
-  const handleUploadResume = (e) => {
+  const handleUploadFile = (e) => {
     const file = e.target?.files[0];
     setObjectUrl(URL.createObjectURL(file));
     setFile(file);
@@ -56,5 +56,5 @@ export const useUpdateResume = () => {
     }
   }, [file, updateResume]);
 
-  return { loading, handleUploadResume, objectUrl };
+  return { loading, handleUploadFile, objectUrl };
 };

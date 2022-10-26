@@ -1,9 +1,9 @@
-import { Spinner } from "../../spinner/Spinner";
+import { Spinner } from "../../UIs/spinner/Spinner";
 import { UploadFileBtn } from "../../uploadFileBtn/UploadFileBtn";
 import { useUpdateResume } from "../../../hooks/useUpdateResume";
 
 export const StepOne = ({ myProfile }) => {
-  const { loading, handleUploadResume, objectUrl } = useUpdateResume();
+  const { loading, handleUploadFile, objectUrl } = useUpdateResume();
   return (
     <div>
       <h3 className="mb-3">Resume</h3>
@@ -29,7 +29,7 @@ export const StepOne = ({ myProfile }) => {
               text="Upload Resume "
               color="secondary"
               accept=".pdf"
-              handleUploadFile={handleUploadResume}
+              handleUploadFile={handleUploadFile}
             />
             {/* <button className="btn btn-secondary">Replace</button> */}
           </div>

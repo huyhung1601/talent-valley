@@ -4,7 +4,7 @@ import { useUpdateResume } from "../../../hooks/useUpdateResume";
 import { UploadFileBtn } from "../../uploadFileBtn/UploadFileBtn";
 import { ResumeInfo } from "./ResumeInfo";
 export const ResumeCard = ({ resume }) => {
-  const { handleUploadFile } = useUpdateResume({});
+  const { handleUploadFile } = useUpdateResume();
   return (
     <div className="card">
       <div className="card-body">
