@@ -1,16 +1,7 @@
-import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 
-export const InterviewComplete = ({
-  complete,
-  updatedAt,
-  handleBackToIntro,
-}) => {
-  useEffect(() => {
-    if (!complete) {
-      handleBackToIntro();
-    }
-  }, [complete, handleBackToIntro]);
+export const InterviewComplete = ({ updatedAt }) => {
   return (
     <div className="d-flex flex-column gap-3 align-items-center justify-content-center">
       <h4>
@@ -18,6 +9,9 @@ export const InterviewComplete = ({
         {format(updatedAt)}!
       </h4>
       <h5>We will contact you soon!</h5>
+      <Link className="btn btn-primary" to="/">
+        Continue Find Job
+      </Link>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useRef, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -22,8 +23,12 @@ export const InterviewContainer = () => {
   const [question, setQuestion] = useState(1);
   const [isRecording, setIsRecording] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [isComplete, setIsComplete] = useState(false);
   const { interviewId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   const { loading, error, data } = useQuery(GET_INTERVIEW, {
     variables: { interviewId },
@@ -56,11 +61,8 @@ export const InterviewContainer = () => {
             : x
         )
       );
-      if (question < data?.interview.questions.length) {
-        setQuestion(question + 1);
-      } else {
-        navigate("review");
-      }
+      handleNext();
+
       handleClearRecord();
     },
   });
@@ -73,7 +75,7 @@ export const InterviewContainer = () => {
         variables: { interviewId },
         data: { ...data?.interview, complete: true, questions: questions },
       });
-      navigate("complete");
+      setIsComplete(true);
       toast(completeInterview.message);
     },
   });
@@ -136,6 +138,14 @@ export const InterviewContainer = () => {
     }
   };
 
+  const handleNext = () => {
+    if (question < data?.interview.questions.length) {
+      setQuestion(question + 1);
+    } else {
+      navigate("review");
+    }
+  };
+
   const handleStartInterview = () => {
     navigate("questions");
     getVideo();
@@ -157,14 +167,21 @@ export const InterviewContainer = () => {
           answer: x.answer,
         }))
       );
+      setIsComplete(data?.interview.complete);
     }
   }, [data?.interview]);
 
   useEffect(() => {
-    if (data?.interview.complete) {
+    if (isComplete) {
       navigate("complete");
+    } else {
+      navigate(
+        location.pathname.split("/").includes("complete")
+          ? "introduction"
+          : location.pathname
+      );
     }
-  }, [data?.interview.complete, navigate]);
+  }, [location.pathname, isComplete, navigate]);
 
   useEffect(() => {
     getVideo();
@@ -198,6 +215,7 @@ export const InterviewContainer = () => {
                   handleRecord={handleRecord}
                   handleSave={handleSave}
                   handleStop={handleStop}
+                  handleNext={handleNext}
                 />
               }
             />
@@ -213,11 +231,7 @@ export const InterviewContainer = () => {
             <Route
               path="complete"
               element={
-                <InterviewComplete
-                  complete={data?.interview.complete}
-                  updatedAt={data?.interview.updatedAt}
-                  handleBackToIntro={() => navigate("introduction")}
-                />
+                <InterviewComplete updatedAt={data?.interview.updatedAt} />
               }
             />
           </Routes>

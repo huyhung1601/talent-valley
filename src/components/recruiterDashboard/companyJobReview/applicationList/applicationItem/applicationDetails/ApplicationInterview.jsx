@@ -49,7 +49,11 @@ export const ApplicationInterview = ({
                     {">>"}
                   </button>
                 </div>
-                <video controls src={interview.questions[question].answer} />
+                <video
+                  width="100%"
+                  controls
+                  src={interview.questions[question].answer}
+                />
               </div>
             </>
           )}

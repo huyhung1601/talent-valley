@@ -10,8 +10,8 @@ export const InterviewQuestions = ({
   handleRecord,
   handleSave,
   handleStop,
+  handleNext,
 }) => {
-  console.log(question, questions);
   return (
     <div className="row bg-light p-2 w-100">
       <div className="col-12  col-lg-6 ">
@@ -27,7 +27,7 @@ export const InterviewQuestions = ({
               </span>
             ) : (
               <span>
-                <MdDone className="text-white bg-danger rounded-circle" />
+                <MdDone className="text-white bg-primary rounded-circle" />
               </span>
             )}
             <p>{questions[question - 1]?.question}</p>
@@ -51,7 +51,11 @@ export const InterviewQuestions = ({
               </button>
             )}
             {!videoUrl && (
-              <button className="btn btn-danger" onClick={handleRecord}>
+              <button
+                className="btn btn-danger"
+                disabled={isRecording}
+                onClick={handleRecord}
+              >
                 {isRecording ? "Recording..." : "Record"}
               </button>
             )}
@@ -62,13 +66,19 @@ export const InterviewQuestions = ({
             >
               Stop
             </button>
-            <button
-              className="btn btn-primary"
-              disabled={!videoUrl}
-              onClick={handleSave}
-            >
-              Save
-            </button>
+            {questions[question - 1]?.answer ? (
+              <button className="btn btn-primary" onClick={handleNext}>
+                Next
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary"
+                disabled={!videoUrl}
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            )}
           </div>
         </div>
       </div>
