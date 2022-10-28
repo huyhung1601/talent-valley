@@ -41,6 +41,7 @@ const cache = new InMemoryCache({
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
+  // uri: "http://talent-valley-node-server-dev.ap-southeast-2.elasticbeanstalk.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -60,7 +61,7 @@ const App = () => {
     link: authLink.concat(httpLink),
     cache,
     fetchOptions: {
-      mode: "cors",
+      mode: "no-cors",
     },
   });
 
