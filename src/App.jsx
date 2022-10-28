@@ -59,6 +59,9 @@ const App = () => {
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache,
+    fetchOptions: {
+      mode: "cors",
+    },
   });
 
   const { user } = useSelector((state) => state.auth);

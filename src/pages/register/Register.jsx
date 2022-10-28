@@ -6,7 +6,6 @@ import { Spinner } from "../../components/UIs/spinner/Spinner";
 import { registerSuccess } from "../../features/auth/authSlice";
 import { REGISTER } from "../../graphql/mutations/userMutations";
 import { useForm } from "../../hooks/useForm";
-import { useStorage } from "../../hooks/useStorage";
 import { toast } from "react-toastify";
 
 const initialValue = {
@@ -20,7 +19,6 @@ export const Register = () => {
   const { values, handleChange, resetValues } = useForm(initialValue);
   const [errors, setErrors] = useState({});
   const dispath = useDispatch();
-  const { setStorageData } = useStorage();
 
   const [register, { loading }] = useMutation(REGISTER, {
     variables: { registerInput: values },
