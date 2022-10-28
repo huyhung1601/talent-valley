@@ -40,7 +40,8 @@ const cache = new InMemoryCache({
 });
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://talent-valley-server.herokuapp.com/graphql",
+  // uri: "http://localhost:4000/graphql",
   // uri: "http://talent-valley-node-server-dev.ap-southeast-2.elasticbeanstalk.com/graphql",
 });
 
