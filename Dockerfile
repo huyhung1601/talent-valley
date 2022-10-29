@@ -1,4 +1,3 @@
-
 # Build react client
 FROM node:16-alpine
 
