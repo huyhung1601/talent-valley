@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { CompanySearchBar } from "./companySearchBar/CompanySearchBar";
 import { CompanySlideBar } from "./companySlideBar/CompanySlideBar";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { CompanyReview } from "./companyReview/CompanyReview";

@@ -1,5 +1,3 @@
-import companyImage from "../../../assets/company-image.jpg";
-import companyLogo from "../../../assets/company-logo.png";
 import { CompanyContainer } from "../../companyContainer/CompanyContainer";
 
 export const MyComany = ({ company }) => {

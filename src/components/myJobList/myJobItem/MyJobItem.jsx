@@ -1,11 +1,6 @@
-import { useMutation } from "@apollo/client";
 import React from "react";
 import companyLogo from "../../../assets/company-logo.png";
-import { REMOVE_FROM_MY_JOBS } from "../../../graphql/mutations/userMutations";
-import { MY_JOBS } from "../../../graphql/queries/userQueries";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { removeFromMyJobsSuccess } from "../../../features/auth/authSlice";
 import { selectJob } from "../../../features/job/jobSlice";
 import { useNavigate } from "react-router-dom";
 

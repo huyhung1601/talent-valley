@@ -1,5 +1,4 @@
 import React from "react";
-import { ResumeInfo } from "../../profileContainer/resumeCard/ResumeInfo";
 import { ContactReview } from "./ContactReview";
 import { ResumeReview } from "./ResumeReview";
 

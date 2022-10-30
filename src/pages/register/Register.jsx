@@ -38,7 +38,7 @@ export const Register = () => {
       confirmPassword:
         values.password !== values.confirmPassword ? "Password not match!" : "",
     }));
-  }, [values.confirmPassword]);
+  }, [values.password, values.confirmPassword]);
 
   const handleRegister = (e) => {
     e.preventDefault();

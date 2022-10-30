@@ -3,10 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  removeFromMyJobsSuccess,
-  saveJobSuccess,
-} from "../../features/auth/authSlice";
+import { removeFromMyJobsSuccess } from "../../features/auth/authSlice";
 import { selectJob } from "../../features/job/jobSlice";
 import { UPDATE_JOB } from "../../graphql/mutations/jobMutations";
 import {

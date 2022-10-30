@@ -1,11 +1,8 @@
 import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { MyJobList, SlideBar, Spinner } from "../../components";
-import { getMyJobsSuccess } from "../../features/auth/authSlice";
-import { MY_JOBS, MY_PROFILE } from "../../graphql/queries/userQueries";
+import { MY_PROFILE } from "../../graphql/queries/userQueries";
 
 export const MyJobs = () => {
   const { loading, data } = useQuery(MY_PROFILE);
