@@ -1,6 +1,6 @@
 import { CompanyContainer } from "../../companyContainer/CompanyContainer";
 
-export const MyComany = ({ company }) => {
+export const CompanyTab = ({ company }) => {
   const items = ["about", "culture"];
   return (
     <>

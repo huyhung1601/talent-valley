@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { GET_COMPANY_JOBS } from "../../../graphql/queries/companyQueries";
-import { Spinner } from "../../UIs/spinner/Spinner";
+import { Spinner } from "../../UIs";
 import { CompanyJob } from "./CompanyJob";
 
 export const CompanyJobs = ({ companyId }) => {

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Spinner } from "../UIs/spinner/Spinner";
-import { MyComany } from "./myCompany/MyComany";
+import { CompanyTab } from "./companyTab/CompanyTab";
 import { Sidebar } from "./sidebar/Sidebar";
 import { MY_COMPANY } from "../../graphql/queries/userQueries";
 import { JobsTab } from "./jobsTab/JobsTab";
@@ -28,7 +28,7 @@ export const RecruiterDashboard = () => {
   if (error) return <h6>Something went wrong!</h6>;
 
   return (
-    <div className="d-flex h-100  ">
+    <div className="d-flex h-100 w-100  ">
       <Sidebar
         items={items}
         openSidebar={openSidebar}
@@ -39,13 +39,15 @@ export const RecruiterDashboard = () => {
         companyName={data?.myCompany.name}
       />
       {loading ? (
-        <Spinner />
+        <div className="d-flex justify-content-center w-100">
+          <Spinner />
+        </div>
       ) : (
         <div className="p-2 w-100 h-100 overflow-auto">
           <Routes>
             <Route
               path="home/*"
-              element={<MyComany company={data?.myCompany} />}
+              element={<CompanyTab company={data?.myCompany} />}
             />
             <Route
               path="jobs"

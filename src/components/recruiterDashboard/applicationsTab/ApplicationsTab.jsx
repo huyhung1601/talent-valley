@@ -22,13 +22,13 @@ export const ApplicationsTab = () => {
   if (error) return <h6>Something went wrong!</h6>;
   return (
     <div className="d-flex flex-column gap-3 h-100 ">
-      <div className="text-center mt-3">
-        <h3>Applications</h3>
-      </div>
       {loading ? (
         <Spinner />
       ) : (
         <>
+          <div className="text-center mt-3">
+            <h3>Applications</h3>
+          </div>
           <div className="row m-0 h-100  ">
             <div className="col col-3 p-1 ">
               <div className="card h-100">

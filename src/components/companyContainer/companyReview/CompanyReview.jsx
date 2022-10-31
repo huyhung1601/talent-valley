@@ -2,12 +2,12 @@ import { useMutation } from "@apollo/client";
 import React from "react";
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
-import { UPDATE_COMPANY_REVIEW } from "../../../graphql/mutations/companyMutations";
-import { useForm } from "../../../hooks/useForm";
 import { CompanyReviewEdit } from "./CompanyReviewEdit";
 import { toast } from "react-toastify";
-import { Spinner } from "../../UIs/spinner/Spinner";
 import { MY_COMPANY } from "../../../graphql/queries/userQueries";
+import { UPDATE_COMPANY_REVIEW } from "../../../graphql/mutations/companyMutations";
+import { useForm } from "../../../hooks/useForm";
+import { Spinner } from "../../UIs";
 
 const initialValues = {
   website: "",
