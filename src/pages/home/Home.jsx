@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { JobList, Spinner, JobSearch, JobDetails } from "../../components";
+import { JobList, JobSearch, JobDetails } from "../../components";
 import { PagesContainer } from "../../components/UIs/pagesContainer/PagesContainer";
 import { GET_JOBS } from "../../graphql/queries/jobQueries";
 
@@ -25,7 +25,6 @@ export const Home = () => {
         <JobSearch />
       </div>
       <div className="row">
-        {loading && <Spinner />}
         {error && <h6>Something went wrong!</h6>}
         {!loading && !error && (
           <>

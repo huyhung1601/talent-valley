@@ -28,8 +28,6 @@ export const InterviewContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
-
   const { loading, error, data } = useQuery(GET_INTERVIEW, {
     variables: { interviewId },
   });
@@ -62,7 +60,6 @@ export const InterviewContainer = () => {
         )
       );
       handleNext();
-
       handleClearRecord();
     },
   });
@@ -81,7 +78,7 @@ export const InterviewContainer = () => {
   });
 
   const getVideo = () => {
-    navigator.mediaDevices
+    window.navigator.mediaDevices
       .getUserMedia({
         video: true,
         audio: true,
@@ -90,6 +87,7 @@ export const InterviewContainer = () => {
         videoRef.current.srcObject = stream;
         videoRef.current.muted = true;
         videoRef.current.play();
+        console.log("run");
       })
       .catch((err) => {
         console.log(err);
@@ -97,8 +95,8 @@ export const InterviewContainer = () => {
   };
 
   const handleRecord = () => {
-    setIsRecording(true);
     getVideo();
+    setIsRecording(true);
     recorderRef.current = new MediaRecorder(videoRef.current.srcObject);
     recorderRef.current.start(500);
     recorderRef.current.ondataavailable = (e) => {
@@ -148,7 +146,6 @@ export const InterviewContainer = () => {
 
   const handleStartInterview = () => {
     navigate("questions");
-    getVideo();
   };
 
   const handleSubmit = () => {
@@ -184,8 +181,10 @@ export const InterviewContainer = () => {
   }, [location.pathname, isComplete, navigate]);
 
   useEffect(() => {
-    getVideo();
-  }, [videoRef]);
+    if (location.pathname.split("/").includes("questions")) {
+      getVideo();
+    }
+  }, [location.pathname]);
 
   if (error) return <h6>Something went wrong!</h6>;
 

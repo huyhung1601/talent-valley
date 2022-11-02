@@ -25,11 +25,11 @@ export const ApplicationDetails = ({
   return (
     <div
       id={`flush-${application.id}`}
-      className="accordion-collapse collapse"
+      className="accordion-collapse collapse bg-light p-2"
       aria-labelledby="flush-headingOne"
       data-bs-parent="#accordionFlushExample"
     >
-      <div className="accordion-body p-2">
+      <div className="accordion-body p-2 bg-white">
         {openQuestionForm ? (
           <VideoInterviewForm
             questions={questions}
