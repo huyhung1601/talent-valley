@@ -20,6 +20,7 @@ export const HeaderMenu = ({ user }) => {
 
   const handleLogout = () => {
     dispatch(logoutSuccess());
+    navigate("/")
   };
 
   const handleNavigate = (route) => {
